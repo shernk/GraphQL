@@ -50,6 +50,16 @@ const books = [
     name: "The Way of Shadows",
     authorId: 3,
   },
+  {
+    id: 5,
+    name: "Tenet",
+    authorId: 3,
+  },
+  {
+    id: 6,
+    name: "The called",
+    authorId: 2,
+  },
 ];
 
 const AuthorType = new GraphQLObjectType({
@@ -58,6 +68,12 @@ const AuthorType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLInt) },
     name: { type: GraphQLNonNull(GraphQLString) },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve: (author) => {
+        return books.filter((book) => book.authorId === author.id);
+      },
+    },
   }),
 });
 
